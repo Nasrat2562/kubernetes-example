@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: my-app-container
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
+        command: ["/bin/sh", "-c"]
+        args: 
+          - |
+            echo '<!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <title>Dev Workspace | Kubernetes</title>
+                <style>
+                    body { margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background: linear-gradient(135deg, #1e1e2f 0%, #0f0f1a 100%); color: white; font-family: sans-serif; text-align: center; }
+                    .container { padding: 40px; border-radius: 20px; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+                    h1 { font-size: 3rem; color: #61dafb; }
+                    .badge { display: inline-block; padding: 8px 20px; background: #4caf50; border-radius: 50px; font-weight: bold; }
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <h1>Kubernetes Active</h1>
+                    <p>Local Environment Bridged Successfully</p>
+                    <div class="badge">PHP & LARAVEL READY</div>
+                </div>
+            </body>
+            </html>' > /usr/share/nginx/html/index.html && nginx -g 'daemon off;'
